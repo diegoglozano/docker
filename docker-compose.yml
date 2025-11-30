@@ -32,6 +32,9 @@ services:
       start_period: 300s
       retries: 5
     restart: unless-stopped
+    networks:
+      - wger_network
+      - dokploy-network
 
   nginx:
     image: docker.io/nginx:stable
@@ -52,6 +55,9 @@ services:
       retries: 5
       start_period: 30s
     restart: unless-stopped
+    networks:
+      - wger_network
+      - dokploy-network
 
   db:
     image: docker.io/postgres:15-alpine
