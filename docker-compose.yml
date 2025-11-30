@@ -82,6 +82,8 @@ services:
       retries: 5
       start_period: 30s
     restart: unless-stopped
+    networks:
+      - wger_network
 
   cache:
     image: docker.io/redis
@@ -103,6 +105,8 @@ services:
       retries: 5
       start_period: 30s
     restart: unless-stopped
+    networks:
+      - wger_network
 
     # You probably want to limit the memory usage of the cache, otherwise it might
     # hog all the available memory. Remove or change according to your needs.
@@ -129,6 +133,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    networks:
+      - wger_network
 
   celery_beat:
     image: docker.io/wger/server:latest
@@ -145,6 +151,8 @@ services:
     depends_on:
       celery_worker:
         condition: service_healthy
+    networks:
+      - wger_network
 
 volumes:
   postgres-data:
@@ -160,5 +168,7 @@ volumes:
   static:
 
 networks:
-  default:
+  wger_network:
     name: wger_network
+  dokploy-network:
+    external: true
